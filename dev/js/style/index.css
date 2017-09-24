@@ -1,3 +1,7 @@
 .rdt{
 	width: 100% !important;
 }
+.cursor-pointer input{
+	cursor: pointer;
+
+}

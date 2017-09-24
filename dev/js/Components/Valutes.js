@@ -21,7 +21,8 @@
 			this.addValutesForNotShow=this.addValutesForNotShow.bind(this)
 			this.showAllValutes=this.showAllValutes.bind(this)
 			this.state={
-				changeInDate:false
+				changeInDate:false,
+				changeInValutes:false
 			}
 
 		}
@@ -34,9 +35,9 @@
 		handleChangeValute(val){
 					this.props.dispatch(ChangeValuteForShow(val))
 					this.setState({
-					changeInDate:false
+					changeInValutes:true
 					})
-
+					
 		}
 		showAllValutes(){
 			this.props.dispatch(AddValutesForNotShow([]))
@@ -44,18 +45,26 @@
 
 		}
 		getDataForNewDate(){
-				this.props.dispatch(FetchStructure(this.props.Valutes.date?this.props.Valutes.date:moment().format('DD/MM/YYYY')))
+				this.props.dispatch(FetchStructure(this.props.Valutes.date?
+					this.props.Valutes.date:moment().format('DD/MM/YYYY')))
+				this.setState({
+					changeInDate:false
+					})
 			
 		}
 		componentWillMount(){
 			if(!this.props.Valutes.date){
-				this.props.dispatch(ChangeValuteForShow(moment().format('DD/MM/YYYY')))
+				this.props.dispatch(AddDate(moment().format('DD/MM/YYYY')))
 
 				this.props.dispatch(FetchStructure(moment().format('DD/MM/YYYY')))
 			}
 		}
 		addValutesForNotShow(){
 			this.props.dispatch(AddValutesForNotShow(this.props.Valutes.selectedOptions))
+			this.setState({
+				changeInValutes:false
+			})
+
 		}
 		render() {
 			let options
@@ -108,29 +117,30 @@
 			</div>
 			<div className="col-md-4 col-sm-4 col-xs-4 col-lg-4">
 
-			<div className="form-group"> 
-				<label>Выберите валюты которые нужно скрыть</label>          
-            	<Select
-            		multi={true}
-            		placeholder="Выберите"
-            		options={options}
-            		value={this.props.Valutes.selectedOptions}
-            		onChange={this.handleChangeValute}
-            		/>
+					<div className="form-group"> 
+						<label>Выберите валюты которые нужно скрыть</label>          
+            			<Select
+            			multi={true}
+            			placeholder="Выберите"
+            			options={options}
+            			value={this.props.Valutes.selectedOptions}
+            			onChange={this.handleChangeValute}
+            			/>
             		</div>
 					<div className="form-group">  
 
-            		<button className="btn btn-default"
-            		disabled={this.props.Valutes.selectedOptions.length==0}
-            		 onClick={this.addValutesForNotShow}>Скрыть</button>
+            			<button className="btn btn-default"
+            			disabled={!this.state.changeInValutes}
+            		 	onClick={this.addValutesForNotShow}>Скрыть</button>
 
-</div>            		 					<div className="form-group">  
+					</div>
+            		<div className="form-group">  
 
-            		 <button className="btn btn-primary"
-            		disabled={this.props.Valutes.valutesNotShow.length==0}
-            		 onClick={this.showAllValutes}>Показать все</button>
+            		 	<button className="btn btn-primary"
+            			disabled={this.props.Valutes.valutesNotShow.length==0}
+            		 	onClick={this.showAllValutes}>Показать все</button>
             		
-            </div>
+            		</div>
             </div>
 			<div className="col-md-4 col-sm-4 col-xs-4 col-lg-4">
 				<div className="form-group">
@@ -138,6 +148,7 @@
 
 					            <DateTime 
 								timeFormat={false}
+								className="cursor-pointer"
 								dateFormat="DD/MM/YYYY"
                                 inputProps={{placeholder: 'Выберите дату', readOnly: true}}
                                 onChange={this.handleChangeDate}
@@ -148,7 +159,7 @@
 			
             <div className="form-group"> 
             		<button className="btn btn-primary" 
-            		disabled={!this.state.changeInDate}
+            		disabled={this.state.changeInDate==false}
             		onClick={this.getDataForNewDate}>Поиск</button>
                                 </div>
             </div>

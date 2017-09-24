@@ -30,8 +30,9 @@ class SelectDate extends React.Component {
     render() {
         return <div className="container">
         	<div className="form-group">
-				<label>Выберите дату по которой нужно получить валюту</label>          
-					<DateTime 	
+								<label>Выберите дату по которой нужно получить валюту</label>          
+								<DateTime 	
+								className="cursor-pointer"
 								timeFormat={false}
 								dateFormat="DD/MM/YYYY"
                                 inputProps={{placeholder: 'Выберите дату', readOnly: true}}
