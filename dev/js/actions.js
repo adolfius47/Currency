@@ -1,0 +1,8 @@
+"use strict"
+
+export const FETCH_USER = 'FETCH_USER';
+export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
+export const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
+export const CHANGE_VALUTE_FOR_SHOW = 'CHANGE_VALUTE_FOR_SHOW';
+export const ADD_VALUTES_FOR_NOT_SHOW = 'ADD_VALUTES_FOR_NOT_SHOW';
+export const ADD_DATE = 'ADD_DATE';
